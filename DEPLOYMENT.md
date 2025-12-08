@@ -6,7 +6,7 @@
 Your Gemini API key was previously exposed and must be regenerated:
 
 1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-2. Delete the old API key: `AIzaSyCDSMneHda3eg2OK_BcWZqPYMdPGoyyf1I`
+2. Delete the old API key: `your API Key`
 3. Generate a new API key
 4. Update `.env` file with the new key
 5. **NEVER** commit `.env` files to version control
