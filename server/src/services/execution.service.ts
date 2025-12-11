@@ -79,7 +79,7 @@ export const executeSql = async (sql: string): Promise<any> => {
     try {
         // Call external API with SQL query as 'tab' parameter
         const response = await axios.get(
-            `${externalUrl}/avidan/restService/onecert/report.action`,
+            `${externalUrl}`,
             {
                 params: {
                     tab: sql  // SQL query passed as query parameter
