@@ -18,5 +18,6 @@ router.post('/insights', getInsights);
 // Cache Management
 router.get('/cache/stats', getCacheStats);
 router.delete('/cache', clearCache);
+router.get('/cache/clear', clearCache); // Allow clearing via browser URL
 
 export default router;

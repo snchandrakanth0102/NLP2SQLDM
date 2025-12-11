@@ -39,7 +39,7 @@ export const ResultsVisualizer: React.FC<ResultsVisualizerProps> = ({ result }) 
 
     const handleDownload = () => {
         const timestamp = new Date().toISOString().split('T')[0];
-        downloadCSV(data, `results_${timestamp}.csv`);
+        downloadCSV(data, `results_${timestamp}.csv`, result.columnOrder);
     };
 
     const handlePreviousPage = () => {

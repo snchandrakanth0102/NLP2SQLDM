@@ -73,6 +73,8 @@ export const executeSql = async (sql: string): Promise<any> => {
     }
 
     const externalUrl = process.env.EXTERNAL_DB_URL || 'http://localhost:8080';
+    console.log(`[DEBUG] Executing SQL against: ${externalUrl}`);
+
 
     try {
         // Call external API with SQL query as 'tab' parameter
@@ -195,12 +197,12 @@ function determineVisualizationType(data: any[]): string {
     }
 
     // Has 'value' field along with category/name field → bar chart
-    const hasValue = keys.includes('value') || keys.includes('total') || keys.includes('count');
-    const hasCategory = keys.includes('category') || keys.includes('name') || keys.includes('region');
+    // const hasValue = keys.includes('value') || keys.includes('total') || keys.includes('count');
+    // const hasCategory = keys.includes('category') || keys.includes('name') || keys.includes('region');
 
-    if (hasValue && hasCategory) {
-        return 'bar';
-    }
+    // if (hasValue && hasCategory) {
+    //     return 'bar';
+    // }
 
     // Default to table for all other cases
     return 'table';

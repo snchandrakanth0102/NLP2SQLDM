@@ -43,7 +43,9 @@ export const validateSqlSyntax = (sql: string): SqlValidationResult => {
     const upperSql = normalizedSql.toUpperCase();
 
     for (const operation of prohibitedOperations) {
-        if (upperSql.includes(operation)) {
+        // Use word boundaries to avoid matching substrings (e.g., 'CREATED_BY' containing 'CREATE')
+        const regex = new RegExp(`\\b${operation}\\b`, 'i');
+        if (regex.test(upperSql)) {
             errors.push(`Prohibited operation detected: ${operation}. Only SELECT queries are allowed.`);
         }
     }

@@ -3,10 +3,32 @@ import { getSchemaContext } from './rag.service';
 import { validateSqlSyntax } from './guardrails.service';
 import { formatSqlCasing } from './execution.service';
 import { semanticCache } from './semantic-cache.service';
+import fs from 'fs';
+import path from 'path';
 
 const apiKey = process.env.GEMINI_API_KEY || '';
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+
+// ---- Token Logger ----
+function logTokens(modelName: string, usage: any) {
+    if (!usage) return;
+    const log = `
+Time: ${new Date().toISOString()}
+Model: ${modelName}
+Prompt Tokens: ${usage.promptTokenCount}
+Response Tokens: ${usage.candidatesTokenCount}
+Total Tokens: ${usage.totalTokenCount}
+-----------------------------------------------------
+`;
+    try {
+        const logPath = path.join(process.cwd(), 'google_token_logs.txt');
+        fs.appendFileSync(logPath, log);
+        console.log(`📝 logged to ${logPath}`);
+    } catch (err) {
+        console.error('Failed to write token logs:', err);
+    }
+}
 
 export const generateSql = async (question: string): Promise<string> => {
     // Ensure API key is present
@@ -17,6 +39,7 @@ export const generateSql = async (question: string): Promise<string> => {
     // 1. Check Semantic Cache
     const cachedSql = await semanticCache.findSimilar(question);
     if (cachedSql) {
+        //logTokens('CACHE_HIT', { promptTokenCount: 0, candidatesTokenCount: 0, totalTokenCount: 0 });
         return cachedSql;
     }
 
@@ -56,6 +79,12 @@ export const generateSql = async (question: string): Promise<string> => {
     try {
         const result = await model.generateContent(prompt);
         const response = await result.response;
+
+        // Log usage
+        if (response.usageMetadata) {
+            logTokens('gemini-2.5-flash', response.usageMetadata);
+        }
+
         let text = response.text();
 
         // Clean up potential markdown code blocks if the model ignores the instruction
@@ -81,8 +110,10 @@ export const generateSql = async (question: string): Promise<string> => {
         await semanticCache.cacheResult(question, text);
 
         return text;
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error calling Gemini:', error);
-        throw new Error('Failed to generate SQL from LLM.');
+        // Expose the real error message for debugging
+        const errorMessage = error.message || 'Unknown error from Gemini API';
+        throw new Error(`Failed to generate SQL: ${errorMessage}`);
     }
 };

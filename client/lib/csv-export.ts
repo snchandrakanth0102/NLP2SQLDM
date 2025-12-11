@@ -1,11 +1,11 @@
-export const downloadCSV = (data: any[], filename: string = 'results.csv') => {
+export const downloadCSV = (data: any[], filename: string = 'results.csv', columnOrder?: string[]) => {
     if (!data || data.length === 0) {
         alert('No data to download');
         return;
     }
 
-    // Get headers from first object
-    const headers = Object.keys(data[0]);
+    // Use provided order or fallback to keys from first object
+    const headers = columnOrder && columnOrder.length > 0 ? columnOrder : Object.keys(data[0]);
 
     // Create CSV content
     const csvContent = [

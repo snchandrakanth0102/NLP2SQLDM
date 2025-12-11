@@ -13,6 +13,12 @@ app.use(helmet());
 // CORS - Restrict to specific origins in production
 const corsOptions = {
     origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+        // Log origin for debugging
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`[CORS] Incoming origin: ${origin}`);
+            return callback(null, true); // Allow all in dev
+        }
+
         const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
             ? process.env.CORS_ALLOWED_ORIGINS.split(',').map(o => o.trim())
             : ['http://localhost:3000'];
@@ -20,9 +26,10 @@ const corsOptions = {
         // Allow requests with no origin (mobile apps, curl, postman)
         if (!origin) return callback(null, true);
 
-        if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+        if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
         } else {
+            console.warn(`[CORS] Blocked origin: ${origin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
