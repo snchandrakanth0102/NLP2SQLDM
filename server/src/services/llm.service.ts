@@ -84,6 +84,22 @@ Follow the CRITICAL RULES below strictly.
 
 If the user asks for specific details, DO NOT aggregate.
 
+CRITICAL: RECOGNITION SUBMITTER VS RECIPIENT DISTINCTION
+
+If the user asks about users who "RECEIVED", "GOT", "WAS GIVEN", or "WAS RECOGNIZED":
+  -> Join to claim_recipient table using claim_recipient.participant_id
+  -> This counts recognitions/awards the user RECEIVED
+
+If the user asks about users who "SENT", "GAVE", "AWARDED", or "INITIATED recognitions":
+  -> Join to claim table using claim.submitter_id  
+  -> This counts recognitions the user INITIATED/SUBMITTED
+
+If the user asks about users who "SUBMITTED", "CREATED", or "INITIATED recognition requests":
+  -> Join to claim table using claim.submitter_id
+  -> Same as "SENT/GAVE recognitions"
+
+DO NOT confuse these two paths. They produce DIFFERENT results.
+
 Format the SQL with newlines and indentation for readability.
 
 DO NOT write the query on a single line.

@@ -1,4 +1,28 @@
 {
+  "documentationNotes": {
+    "recognitionDataModel": {
+      "description": "Recognition system has two key user roles:",
+      "submitter": {
+        "definition": "User who INITIATES/SUBMITS a recognition request",
+        "column": "claim.submitter_id",
+        "relatedTables": ["claim"],
+        "businessMeaning": "Who started/submitted the recognition process",
+        "queryContext": "Use to find who submitted the MOST recognition requests"
+      },
+      "recipient": {
+        "definition": "User who RECEIVES/IS RECOGNIZED in a recognition award",
+        "column": "claim_recipient.participant_id",
+        "relatedTables": ["claim_recipient", "claim_item"],
+        "businessMeaning": "Who actually received the recognition/award",
+        "queryContext": "Use to find who received/was given the MOST recognitions"
+      }
+    },
+    "keyDistinctions": [
+      "SUBMITTER (sent recognitions) = claim.submitter_id → Count recognitions they initiated",
+      "RECIPIENT (received recognitions) = claim_recipient.participant_id → Count recognitions they received",
+      "These are DIFFERENT users in most cases and should produce DIFFERENT queries"
+    ]
+  },
   "tables": [
     {
       "tableName": "application_user",
