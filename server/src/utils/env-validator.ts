@@ -11,6 +11,7 @@ interface EnvConfig {
     RATE_LIMIT_WINDOW_MS: number;
     RATE_LIMIT_MAX_REQUESTS: number;
     CORS_ALLOWED_ORIGINS: string[];
+    EXTERNAL_DB_COOKIES?: string;
 }
 
 export const validateAndLoadEnv = (): EnvConfig => {
@@ -62,7 +63,8 @@ export const validateAndLoadEnv = (): EnvConfig => {
         RATE_LIMIT_MAX_REQUESTS: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
         CORS_ALLOWED_ORIGINS: process.env.CORS_ALLOWED_ORIGINS
             ? process.env.CORS_ALLOWED_ORIGINS.split(',').map(o => o.trim())
-            : ['http://localhost:3000']
+            : ['http://localhost:3000'],
+        EXTERNAL_DB_COOKIES: process.env.EXTERNAL_DB_COOKIES
     };
 
     console.log('✅ Environment validation passed');

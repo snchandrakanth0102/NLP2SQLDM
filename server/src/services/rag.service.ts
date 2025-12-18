@@ -33,7 +33,9 @@ interface DatabaseSchema {
   }>;
 }
 
-const schema = databaseSchema as DatabaseSchema;
+// const schema = databaseSchema as DatabaseSchema;
+const schema = databaseSchema as unknown as DatabaseSchema;
+
 
 export const getSchemaContext = (): string => {
   let context = `

@@ -137,12 +137,16 @@ export const ChatInterface: React.FC = () => {
 
         try {
             // Step 1: Generate SQL
+            console.log('📝 [FRONTEND] Calling generateSql...');
             const { sql } = await generateSql(userMessage.content);
+            console.log('✅ [FRONTEND] SQL generated:', sql);
 
             setStatus('executing');
 
             // Step 2: Execute SQL
+            console.log('🔄 [FRONTEND] Calling executeSql...');
             const response = await executeSql(sql);
+            console.log('✅ [FRONTEND] SQL executed, result:', response.result);
 
             const assistantMessage: Message = {
                 role: 'assistant',

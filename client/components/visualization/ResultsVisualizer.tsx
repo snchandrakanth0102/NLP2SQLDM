@@ -56,6 +56,9 @@ export const ResultsVisualizer: React.FC<ResultsVisualizerProps> = ({ result }) 
     }, [result]);
 
     if (visualizationType === 'metric') {
+        // Handle both uppercase and lowercase 'value' key
+        const value = data[0]?.value ?? data[0]?.VALUE ?? Object.values(data[0])?.[0];
+        
         return (
             <div className="space-y-2">
                 <div className="flex items-center gap-2 text-sm font-medium text-gray-600">
@@ -64,7 +67,7 @@ export const ResultsVisualizer: React.FC<ResultsVisualizerProps> = ({ result }) 
                 </div>
                 <div className="p-6 bg-white rounded-lg shadow-md border border-gray-200">
                     <div className="text-4xl font-bold text-blue-600">
-                        {data[0].value.toLocaleString()}
+                        {typeof value === 'number' ? value.toLocaleString() : value}
                     </div>
                 </div>
             </div>

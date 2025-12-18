@@ -23,6 +23,7 @@ export class SemanticCacheService {
     private cacheFilePath: string;
     private similarityThreshold: number;
     private maxCacheSize: number;
+    private lastModified: number = 0;
 
     constructor() {
         this.cacheFilePath = path.join(process.cwd(), 'cache.json');
@@ -36,6 +37,7 @@ export class SemanticCacheService {
             if (fs.existsSync(this.cacheFilePath)) {
                 const data = fs.readFileSync(this.cacheFilePath, 'utf-8');
                 this.cache = JSON.parse(data);
+                this.lastModified = fs.statSync(this.cacheFilePath).mtimeMs;
                 console.log(`✅ Semantic Cache loaded: ${this.cache.length} entries.`);
             } else {
                 console.log('ℹ️ No existing cache file found. Starting with empty cache.');
@@ -43,6 +45,23 @@ export class SemanticCacheService {
         } catch (error) {
             console.error('⚠️ Failed to load semantic cache:', error);
             this.cache = [];
+        }
+    }
+
+    private reloadIfModified() {
+        try {
+            if (fs.existsSync(this.cacheFilePath)) {
+                const stats = fs.statSync(this.cacheFilePath);
+                if (stats.mtimeMs > this.lastModified) {
+                    console.log('🔄 Cache file modified externally, reloading...');
+                    const data = fs.readFileSync(this.cacheFilePath, 'utf-8');
+                    this.cache = JSON.parse(data);
+                    this.lastModified = stats.mtimeMs;
+                    console.log(`✅ Cache reloaded: ${this.cache.length} entries.`);
+                }
+            }
+        } catch (error) {
+            console.error('⚠️ Failed to reload cache:', error);
         }
     }
 
@@ -81,6 +100,7 @@ export class SemanticCacheService {
 
     public async findSimilar(question: string): Promise<string | null> {
         try {
+            this.reloadIfModified();
             console.log(`🔍 Checking cache for: "${question}"`);
             const embedding = await this.getEmbedding(question);
 

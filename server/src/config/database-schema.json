@@ -1,1 +1,1315 @@
-
+{
+  "tables": [
+    {
+      "tableName": "application_user",
+      "description": "Stores application user profiles, login credentials, settings, and metadata.",
+      "businessDomain": "User Management",
+      "dataCategory": "Master",
+      "primaryKey": ["USER_ID"],
+      "columns": [
+        {
+          "name": "USER_ID",
+          "type": "NUMBER(18)",
+          "description": "Unique ID of the user",
+          "businessMeaning": "Primary identifier for application users",
+          "isPrimaryKey": true,
+          "isForeignKey": false,
+          "isNullable": false,
+          "isIndexed": true,
+          "isSearchable": true,
+          "sampleValues": [1001, 1002, 1003]
+        },
+        {
+          "name": "USER_NAME",
+          "type": "VARCHAR2(75 CHAR)",
+          "description": "Login username of the user",
+          "businessMeaning": "Unique username used for login",
+          "isNullable": false,
+          "isIndexed": true,
+          "isSearchable": true,
+          "sampleValues": ["john.doe", "sarah.miller"]
+        },
+        {
+          "name": "USER_TYPE",
+          "type": "VARCHAR2(30 CHAR)",
+          "description": "Type of user account",
+          "businessMeaning": "Defines role category such as admin, employee, manager",
+          "isNullable": false,
+          "sampleValues": ["ADMIN", "EMPLOYEE"]
+        },
+        {
+          "name": "FORCE_PASSWORD_CHANGE",
+          "type": "NUMBER(1)",
+          "description": "Indicates whether user must change password",
+          "businessMeaning": "Controls mandatory password reset workflow",
+          "isNullable": false,
+          "sampleValues": [0, 1]
+        },
+        {
+          "name": "TITLE",
+          "type": "VARCHAR2(30 CHAR)",
+          "description": "User title",
+          "sampleValues": ["Mr", "Ms"]
+        },
+        {
+          "name": "FIRST_NAME",
+          "type": "VARCHAR2(40 CHAR)",
+          "description": "User first name",
+          "sampleValues": ["John", "Emily"]
+        },
+        {
+          "name": "MIDDLE_NAME",
+          "type": "VARCHAR2(40 CHAR)",
+          "description": "User middle name",
+          "sampleValues": ["A", "R"]
+        },
+        {
+          "name": "LAST_NAME",
+          "type": "VARCHAR2(40 CHAR)",
+          "description": "User last name",
+          "isNullable": false,
+          "sampleValues": ["Doe", "Smith"]
+        },
+        {
+          "name": "SUFFIX",
+          "type": "VARCHAR2(30 CHAR)",
+          "description": "Name suffix",
+          "sampleValues": ["Jr.", "Sr."]
+        },
+        {
+          "name": "SSN",
+          "type": "VARCHAR2(40 CHAR)",
+          "description": "Social Security Number",
+          "sampleValues": ["XXX-XX-1234"]
+        },
+        {
+          "name": "BIRTH_DATE",
+          "type": "DATE",
+          "description": "Date of birth",
+          "sampleValues": ["1988-10-01"]
+        },
+        {
+          "name": "GENDER",
+          "type": "VARCHAR2(10 CHAR)",
+          "description": "User gender",
+          "sampleValues": ["Male", "Female"]
+        },
+        {
+          "name": "PASSWORD",
+          "type": "VARCHAR2(100 CHAR)",
+          "description": "Encrypted user password"
+        },
+        {
+          "name": "LOGIN_TOKEN",
+          "type": "VARCHAR2(100 CHAR)",
+          "description": "Session login token"
+        },
+        {
+          "name": "DATE_MODIFIED",
+          "type": "DATE",
+          "description": "Last record modification timestamp"
+        },
+        {
+          "name": "IS_ACTIVE",
+          "type": "NUMBER(1)",
+          "description": "Active/inactive flag",
+          "isNullable": false,
+          "sampleValues": [1, 0]
+        },
+        {
+          "name": "IS_PROFILE_SETUP_DONE",
+          "type": "NUMBER(1)",
+          "description": "Whether profile setup is completed"
+        },
+        {
+          "name": "IS_WELCOME_EMAIL_SENT",
+          "type": "NUMBER(1)",
+          "description": "Whether welcome email was sent"
+        },
+        {
+          "name": "IS_CMS_TERMS_ACCEPTED",
+          "type": "NUMBER(1)",
+          "description": "Whether CMS terms were accepted"
+        },
+        {
+          "name": "IS_TEXT_MESSAGES_TERMS_ACCEPT",
+          "type": "NUMBER(1)",
+          "description": "Whether SMS terms were accepted"
+        },
+        {
+          "name": "LOGIN_FAILURES_COUNT",
+          "type": "NUMBER(3)",
+          "description": "Count of failed login attempts",
+          "sampleValues": [0, 2, 5]
+        },
+        {
+          "name": "LAST_RESET_DATE",
+          "type": "DATE",
+          "description": "Password last reset date"
+        },
+        {
+          "name": "SECRET_QUESTION",
+          "type": "VARCHAR2(100 CHAR)",
+          "description": "Security question"
+        },
+        {
+          "name": "SECRET_ANSWER",
+          "type": "VARCHAR2(250 CHAR)",
+          "description": "Security answer"
+        },
+        {
+          "name": "MASTER_USER_ID",
+          "type": "NUMBER(18)",
+          "description": "Reference to master user ID (if applicable)",
+          "isForeignKey": true,
+          "referencedTable": "application_user",
+          "referencedColumn": "USER_ID"
+        },
+        {
+          "name": "LANGUAGE_ID",
+          "type": "VARCHAR2(10 CHAR)",
+          "description": "Preferred language"
+        },
+        {
+          "name": "ENROLLMENT_SOURCE",
+          "type": "VARCHAR2(30 CHAR)",
+          "description": "Source of user enrollment"
+        },
+        {
+          "name": "ENROLLMENT_DATE",
+          "type": "DATE",
+          "description": "Date of enrollment"
+        },
+        {
+          "name": "IS_OTP",
+          "type": "NUMBER(1)",
+          "description": "Indicates if OTP is enabled"
+        },
+        {
+          "name": "OTP_DATE",
+          "type": "DATE",
+          "description": "OTP generation timestamp"
+        },
+        {
+          "name": "CREATED_BY",
+          "type": "NUMBER(18)",
+          "description": "User who created the record",
+          "isNullable": false
+        },
+        {
+          "name": "DATE_CREATED",
+          "type": "DATE",
+          "description": "Record creation timestamp",
+          "isNullable": false
+        },
+        {
+          "name": "MODIFIED_BY",
+          "type": "NUMBER(18)",
+          "description": "User who last modified the record"
+        },
+        {
+          "name": "VERSION",
+          "type": "NUMBER(18)",
+          "description": "Version for optimistic locking",
+          "isNullable": false
+        },
+        {
+          "name": "IS_COOKIES_TERMS_ACCEPT",
+          "type": "NUMBER(1)",
+          "description": "Whether cookie terms were accepted"
+        },
+        {
+          "name": "LOCK_TIMEOUT_EXPIRE",
+          "type": "DATE",
+          "description": "Account lock timeout expiry"
+        },
+        {
+          "name": "IS_ACCOUNT_LOCKED",
+          "type": "NUMBER(1)",
+          "description": "Account lock flag",
+          "isNullable": false
+        },
+        {
+          "name": "IS_RA_WELCOME_EMAIL_SENT",
+          "type": "NUMBER(1)",
+          "description": "RA welcome email sent flag",
+          "isNullable": false
+        },
+        {
+          "name": "ROSTER_USER_ID",
+          "type": "VARCHAR2(50 CHAR)",
+          "description": "Roster user identifier",
+          "isNullable": false
+        },
+        {
+          "name": "TEAMS_PRESIGNED_TOKEN",
+          "type": "VARCHAR2(300 CHAR)",
+          "description": "Teams integration pre-signed token"
+        },
+        {
+          "name": "TEAMS_PRESIGNED_TIMESTAMP",
+          "type": "NUMBER(16)",
+          "description": "Teams pre-signed token timestamp"
+        },
+        {
+          "name": "IS_DEI_SCORE_INFO_VIEWED",
+          "type": "NUMBER(1)",
+          "description": "DEI score info viewed flag",
+          "isNullable": false
+        },
+        {
+          "name": "IS_EI_WELCOME_EMAIL_SENT",
+          "type": "NUMBER(1)",
+          "description": "EI welcome email sent flag",
+          "isNullable": false
+        }
+      ],
+      "sampleData": [
+        {
+          "USER_ID": 1001,
+          "USER_NAME": "john.doe",
+          "USER_TYPE": "EMPLOYEE",
+          "FIRST_NAME": "John",
+          "LAST_NAME": "Doe",
+          "IS_ACTIVE": 1
+        }
+      ],
+      "totalRecords": 125000,
+      "retentionPolicy": "Permanent (Master Data)"
+    },
+	{
+      "tableName": "user_address",
+      "description": "Stores address details of users.",
+      "businessDomain": "User Management",
+      "dataCategory": "Transactional",
+      "primaryKey": ["user_address_id"],
+      "columns": [
+        {
+          "name": "user_address_id",
+          "type": "numeric",
+          "description": "Unique identifier for the user address record",
+          "businessMeaning": "Primary key of the address record",
+          "isPrimaryKey": true,
+          "isForeignKey": false,
+          "isNullable": false,
+          "isIndexed": true,
+          "isSearchable": true,
+          "sampleValues": [1001, 1002, 1003]
+        },
+        {
+          "name": "user_id",
+          "type": "numeric",
+          "description": "Reference to the application user",
+          "businessMeaning": "Identifies which user the address belongs to",
+          "isPrimaryKey": false,
+          "isForeignKey": true,
+          "referencedTable": "application_user",
+          "referencedColumn": "user_id",
+          "isNullable": false
+        },
+        {
+          "name": "address_type",
+          "type": "string",
+          "description": "Type of address (Home/Work/etc.)",
+          "businessMeaning": "Specifies category of address",
+          "isNullable": false,
+          "sampleValues": ["Home", "Work"]
+        },
+        {
+          "name": "country_id",
+          "type": "numeric",
+          "description": "Country identifier",
+          "isNullable": true,
+          "sampleValues": [1, 91]
+        },
+        { "name": "addr1", "type": "string", "description": "Address line 1", "isNullable": true },
+        { "name": "addr2", "type": "string", "description": "Address line 2", "isNullable": true },
+        { "name": "addr3", "type": "string", "description": "Address line 3", "isNullable": true },
+        { "name": "addr4", "type": "string", "description": "Address line 4", "isNullable": true },
+        { "name": "addr5", "type": "string", "description": "Address line 5", "isNullable": true },
+        { "name": "addr6", "type": "string", "description": "Address line 6", "isNullable": true },
+        {
+          "name": "city",
+          "type": "string",
+          "description": "City of the address",
+          "isNullable": true,
+          "sampleValues": ["New York", "Bangalore"]
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "description": "State/Province",
+          "isNullable": true
+        },
+        {
+          "name": "postal_code",
+          "type": "string",
+          "description": "Zip or postal code",
+          "isNullable": true,
+          "sampleValues": ["560001", "10001"]
+        },
+        {
+          "name": "is_primary",
+          "type": "numeric",
+          "description": "Indicates if this is the primary address",
+          "businessMeaning": "Primary = 1, Secondary = 0",
+          "isNullable": false,
+          "sampleValues": [1, 0]
+        },
+        {
+          "name": "created_by",
+          "type": "numeric",
+          "description": "User ID who created the record",
+          "isNullable": false
+        },
+        {
+          "name": "date_created",
+          "type": "date",
+          "description": "Record creation timestamp",
+          "isNullable": false
+        },
+        {
+          "name": "modified_by",
+          "type": "numeric",
+          "description": "User ID who last modified the record",
+          "isNullable": true
+        },
+        {
+          "name": "date_modified",
+          "type": "date",
+          "description": "Last modified timestamp",
+          "isNullable": true
+        },
+        {
+          "name": "version",
+          "type": "numeric",
+          "description": "Record version for concurrency control",
+          "isNullable": false,
+          "sampleValues": [1, 2]
+        },
+        {
+          "name": "roster_address_id",
+          "type": "string",
+          "description": "External roster system address ID",
+          "isNullable": false
+        }
+      ],
+      "sampleData": [
+        {
+          "user_address_id": 1001,
+          "user_id": 10,
+          "address_type": "Home",
+          "country_id": 91,
+          "addr1": "123 MG Road",
+          "city": "Bangalore",
+          "postal_code": "560001",
+          "is_primary": 1,
+          "roster_address_id": "RA-001"
+        }
+      ],
+      "totalRecords": 250000,
+      "retentionPolicy": "7 years"
+    },
+	{
+      "tableName": "participant_employer",
+      "description": "Stores employer information linked to a participant.",
+      "businessDomain": "HR",
+      "dataCategory": "Transactional",
+      "primaryKey": ["user_id", "employer_id", "participant_employer_index"],
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "numeric",
+          "description": "Unique identifier of the user",
+          "businessMeaning": "Participant linked to an employer",
+          "isPrimaryKey": true,
+          "isForeignKey": false,
+          "isNullable": false,
+          "isIndexed": true,
+          "isSearchable": true,
+          "sampleValues": [1001, 1002]
+        },
+        {
+          "name": "employer_id",
+          "type": "numeric",
+          "description": "Unique ID of the employer",
+          "businessMeaning": "Employer associated with the participant",
+          "isPrimaryKey": true,
+          "isForeignKey": false,
+          "isNullable": false,
+          "sampleValues": [2001, 2002]
+        },
+        {
+          "name": "participant_employer_index",
+          "type": "numeric",
+          "description": "Uniquely identifies employer entry for the participant",
+          "businessMeaning": "Index for multiple employer records per user",
+          "isPrimaryKey": true,
+          "isForeignKey": false,
+          "isNullable": false,
+          "sampleValues": [1, 2, 3]
+        },
+        {
+          "name": "position_type",
+          "type": "string",
+          "description": "Type of position held",
+          "businessMeaning": "Employee’s job category",
+          "isNullable": true,
+          "sampleValues": ["Full-Time", "Part-Time"]
+        },
+        {
+          "name": "department_type",
+          "type": "string",
+          "description": "Department where user works",
+          "businessMeaning": "Functional area within employer organization",
+          "isNullable": true,
+          "sampleValues": ["Engineering", "HR", "Finance"]
+        },
+        {
+          "name": "hire_date",
+          "type": "date",
+          "description": "Date when user was hired",
+          "businessMeaning": "Employment start date",
+          "isNullable": true,
+          "sampleValues": ["2020-03-15", "2019-01-01"]
+        },
+        {
+          "name": "termination_date",
+          "type": "date",
+          "description": "Employment end date, if applicable",
+          "businessMeaning": "Date user left the employer",
+          "isNullable": true
+        },
+        {
+          "name": "created_by",
+          "type": "numeric",
+          "description": "User who created the record",
+          "isNullable": false
+        },
+        {
+          "name": "date_created",
+          "type": "date",
+          "description": "Timestamp of record creation",
+          "isNullable": false
+        },
+        {
+          "name": "modified_by",
+          "type": "numeric",
+          "description": "User who last modified the record",
+          "isNullable": true
+        },
+        {
+          "name": "date_modified",
+          "type": "date",
+          "description": "Timestamp of last modification",
+          "isNullable": true
+        }
+      ],
+      "sampleData": [
+        {
+          "user_id": 1001,
+          "employer_id": 2001,
+          "participant_employer_index": 1,
+          "position_type": "Full-Time",
+          "department_type": "Engineering",
+          "hire_date": "2021-04-01",
+          "termination_date": null
+        }
+      ],
+      "totalRecords": 25000,
+      "retentionPolicy": "7 years"
+    },
+	{
+      "tableName": "user_node",
+      "description": "Stores user-to-node mapping details.",
+      "businessDomain": "General",
+      "dataCategory": "Transactional",
+      "primaryKey": ["user_node_id"],
+      "columns": [
+        {
+          "name": "user_node_id",
+          "type": "NUMBER(18)",
+          "description": "Unique identifier for each user-node mapping.",
+          "isPrimaryKey": true,
+          "isForeignKey": false,
+          "isNullable": false,
+          "isIndexed": true,
+          "isSearchable": true,
+          "sampleValues": [1001, 1002]
+        },
+        {
+          "name": "user_id",
+          "type": "NUMBER(18)",
+          "description": "Reference to the user.",
+          "isPrimaryKey": false,
+          "isForeignKey": true,
+          "referencedTable": "application_user",
+          "referencedColumn": "user_id",
+          "isNullable": false
+        },
+        {
+          "name": "node_id",
+          "type": "NUMBER(18)",
+          "description": "Reference to the associated node.",
+          "isPrimaryKey": false,
+          "isForeignKey": true,
+          "referencedTable": "node",
+          "referencedColumn": "node_id",
+          "isNullable": false
+        },
+        {
+          "name": "status",
+          "type": "NUMBER(1)",
+          "description": "Status of user-node relation (1=Active, 0=Inactive).",
+          "sampleValues": [1, 0],
+          "isNullable": false
+        },
+        {
+          "name": "role",
+          "type": "VARCHAR2(30 CHAR)",
+          "description": "Role of the user in the node, the values are own for owner, mgr for manager, mbr for member.",
+          "sampleValues": ["own", "mgr", "mbr"],
+          "isNullable": false
+        },
+        {
+          "name": "is_primary",
+          "type": "NUMBER(1)",
+          "description": "Indicates if this is user's primary node.",
+          "sampleValues": [1],
+          "isNullable": false
+        },
+        {
+          "name": "created_by",
+          "type": "NUMBER(18)",
+          "description": "ID of user who created this record.",
+          "isNullable": false
+        },
+        {
+          "name": "date_created",
+          "type": "DATE",
+          "description": "Record creation timestamp.",
+          "isNullable": false
+        },
+        {
+          "name": "modified_by",
+          "type": "NUMBER(18)",
+          "description": "ID of user who last modified the record.",
+          "isNullable": true
+        },
+        {
+          "name": "date_modified",
+          "type": "DATE",
+          "description": "Record modification timestamp.",
+          "isNullable": true
+        },
+        {
+          "name": "version",
+          "type": "NUMBER(18)",
+          "description": "Version number used for optimistic locking.",
+          "isNullable": false,
+          "sampleValues": [1, 2, 3]
+        }
+      ],
+      "sampleData": [
+        {
+          "user_node_id": 1001,
+          "user_id": 2001,
+          "node_id": 3001,
+          "status": 1,
+          "role": "ADMIN",
+          "is_primary": 1,
+          "created_by": 1,
+          "date_created": "2024-01-15"
+        }
+      ],
+      "totalRecords": 200000,
+      "retentionPolicy": "7 years"
+    },
+	{
+  "tableName": "node",
+  "description": "Stores hierarchical nodes within the organizational structure.",
+  "businessDomain": "HR",
+  "dataCategory": "Master",
+  "primaryKey": ["NODE_ID"],
+  "columns": [
+    {
+      "name": "NODE_ID",
+      "type": "NUMBER(18)",
+      "description": "Unique identifier for the node",
+      "isPrimaryKey": true,
+      "isForeignKey": false,
+      "isNullable": false,
+      "isIndexed": true,
+      "isSearchable": true,
+      "sampleValues": [1001, 2001]
+    },
+    {
+      "name": "NODE_TYPE_ID",
+      "type": "NUMBER(18)",
+      "description": "Reference to the node type",
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "referencedTable": "node_type",
+      "referencedColumn": "NODE_TYPE_ID",
+      "isNullable": false
+    },
+    {
+      "name": "NAME",
+      "type": "VARCHAR2(255 CHAR)",
+      "description": "Name of the node",
+      "isNullable": false,
+      "sampleValues": ["Engineering", "HR Department"]
+    },
+    {
+      "name": "PATH",
+      "type": "VARCHAR2(4000 CHAR)",
+      "description": "Hierarchical path of the node",
+      "isNullable": false,
+      "sampleValues": ["/1000/2000/3000"]
+    },
+    {
+      "name": "DESCRIPTION",
+      "type": "VARCHAR2(4000 CHAR)",
+      "description": "Node description",
+      "isNullable": true
+    },
+    {
+      "name": "SELF_ENROLLMENT_CODE",
+      "type": "VARCHAR2(255 CHAR)",
+      "description": "Code used for self enrollment into the node",
+      "isNullable": true
+    },
+    {
+      "name": "PARENT_NODE_ID",
+      "type": "NUMBER(18)",
+      "description": "Reference to the parent node",
+      "isForeignKey": true,
+      "referencedTable": "node",
+      "referencedColumn": "NODE_ID",
+      "isNullable": true
+    },
+    {
+      "name": "HIERARCHY_ID",
+      "type": "NUMBER(18)",
+      "description": "Reference to the hierarchy",
+      "isNullable": false
+    },
+    {
+      "name": "IS_DELETED",
+      "type": "NUMBER(1)",
+      "description": "Soft delete flag",
+      "isNullable": false,
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "CREATED_BY",
+      "type": "NUMBER(18)",
+      "description": "User who created the record",
+      "isNullable": false
+    },
+    {
+      "name": "DATE_CREATED",
+      "type": "DATE",
+      "description": "Record creation timestamp",
+      "isNullable": false
+    },
+    {
+      "name": "MODIFIED_BY",
+      "type": "NUMBER(18)",
+      "description": "User who last modified the record",
+      "isNullable": true
+    },
+    {
+      "name": "DATE_MODIFIED",
+      "type": "DATE",
+      "description": "Timestamp of the last update",
+      "isNullable": true
+    },
+    {
+      "name": "VERSION",
+      "type": "NUMBER(18)",
+      "description": "Record version for concurrency control",
+      "isNullable": false
+    },
+    {
+      "name": "ROSTER_NODE_ID",
+      "type": "VARCHAR2(50 CHAR)",
+      "description": "Node identifier in the roster system",
+      "isNullable": false
+    }
+  ],
+  "sampleData": [
+    {
+      "NODE_ID": 1001,
+      "NODE_TYPE_ID": 10,
+      "NAME": "Engineering",
+      "PATH": "/1/1001",
+      "DESCRIPTION": "Engineering division",
+      "PARENT_NODE_ID": 1,
+      "HIERARCHY_ID": 5,
+      "IS_DELETED": 0,
+      "CREATED_BY": 101,
+      "DATE_CREATED": "2024-01-10",
+      "VERSION": 1,
+      "ROSTER_NODE_ID": "ENG-1001"
+    }
+  ]
+},
+{
+  "tableName": "promotion",
+  "description": "Stores information about promotions, their rules, timelines, approval workflows, awards, and sweepstakes configurations.",
+  "businessDomain": "Marketing",
+  "dataCategory": "Master",
+  "primaryKey": ["promotion_id"],
+  "columns": [
+    { "name": "promotion_id", "type": "NUMBER(18)", "isPrimaryKey": true, "isNullable": false, "description": "Unique ID for the promotion" },
+    { "name": "promo_name_asset_code", "type": "VARCHAR2(1000 CHAR)", "isNullable": false, "description": "Asset code for the promotion name" },
+    { "name": "promotion_name", "type": "VARCHAR2(1000 CHAR)", "isNullable": false, "description": "Display name of the promotion" },
+    { "name": "promotion_type", "type": "VARCHAR2(80 CHAR)", "isNullable": false, "description": "Type/category of the promotion" },
+    { "name": "promotion_status", "type": "VARCHAR2(30 CHAR)", "isNullable": false, "description": "Status of the promotion whose value is live for the active promotions, under_construction for the ones being built, and expired for the inactive ones" },
+    { "name": "certificate", "type": "VARCHAR2(30 CHAR)", "description": "Certificate details if applicable" },
+    { "name": "is_deleted", "type": "NUMBER(1)", "isNullable": false, "description": "Soft delete indicator" },
+    { "name": "claim_form_id", "type": "NUMBER(18)", "description": "Associated claim form" },
+    { "name": "promotion_start_date", "type": "DATE", "isNullable": false, "description": "Start date of the promotion" },
+    { "name": "promotion_end_date", "type": "DATE", "description": "End date of the promotion" },
+    { "name": "has_web_rules", "type": "NUMBER(1)", "isNullable": false, "description": "Whether web rules are configured" },
+    { "name": "cm_asset_code", "type": "VARCHAR2(80 CHAR)", "description": "Content management asset code" },
+    { "name": "web_rules_cm_key", "type": "VARCHAR2(80 CHAR)", "description": "Web rules content key" },
+    { "name": "web_rules_start_date", "type": "DATE", "description": "Start date for web rules" },
+    { "name": "web_rules_end_date", "type": "DATE", "description": "End date for web rules" },
+    { "name": "approval_start_date", "type": "DATE", "description": "Approval cycle start date" },
+    { "name": "approval_end_date", "type": "DATE", "description": "Approval cycle end date" },
+    { "name": "approval_type", "type": "VARCHAR2(80 CHAR)", "description": "Type of approval mechanism" },
+    { "name": "approver_type", "type": "VARCHAR2(80 CHAR)", "description": "Type of approver involved" },
+    { "name": "approval_auto_delay_days", "type": "NUMBER(3)", "description": "Delay days for auto-approval" },
+    { "name": "approval_cond_claim_cnt", "type": "NUMBER(3)", "description": "Claim count condition for approval" },
+    { "name": "approval_cond_amt_field_id", "type": "NUMBER(18)", "description": "Amount field used in approval conditions" },
+    { "name": "approval_cond_amt_operator", "type": "VARCHAR2(80 CHAR)", "description": "Operator for amount comparison" },
+    { "name": "approval_cond_amt", "type": "NUMBER(16,4)", "description": "Amount used for approval condition" },
+    { "name": "approver_node_id", "type": "NUMBER(18)", "description": "Node responsible for approval" },
+    { "name": "approval_hierarchy_id", "type": "NUMBER(18)", "description": "Approval hierarchy reference" },
+    { "name": "approval_node_type_id", "type": "NUMBER(18)", "description": "Node type for approval routing" },
+    { "name": "approval_node_levels", "type": "NUMBER(3)", "description": "Number of approval levels" },
+    { "name": "award_budget_master_id", "type": "NUMBER(18)", "description": "Award budget reference" },
+    { "name": "cash_budget_master_id", "type": "NUMBER(18)", "description": "Cash budget reference" },
+    { "name": "badge_setup_id", "type": "NUMBER(18)", "description": "Badge setup reference" },
+    { "name": "is_taxable", "type": "NUMBER(1)", "isNullable": false, "description": "Whether awards are taxable" },
+    { "name": "is_online_entry", "type": "NUMBER(1)", "isNullable": false, "description": "Online entry allowed indicator" },
+    { "name": "is_fileload_entry", "type": "NUMBER(1)", "isNullable": false, "description": "File upload entry allowed indicator" },
+    { "name": "primary_audience_type", "type": "VARCHAR2(40 CHAR)", "description": "Primary audience category" },
+    { "name": "secondary_audience_type", "type": "VARCHAR2(40 CHAR)", "description": "Secondary audience category" },
+    { "name": "web_rules_audience_type", "type": "VARCHAR2(40 CHAR)", "description": "Audience type for web rules" },
+    { "name": "partner_audience_type", "type": "VARCHAR2(40 CHAR)", "description": "Partner audience type" },
+    { "name": "award_type", "type": "VARCHAR2(40 CHAR)", "description": "Type of award" },
+    { "name": "sweeps_active", "type": "NUMBER(1)", "isNullable": false, "description": "Sweepstakes active indicator" },
+    { "name": "sweeps_claim_eligibility_type", "type": "VARCHAR2(120 CHAR)", "description": "Eligibility rules for sweepstakes claims" },
+    { "name": "sweeps_winner_eligibility_type", "type": "VARCHAR2(80 CHAR)", "description": "Eligibility rules for sweepstakes winners" },
+    { "name": "sweeps_multiple_award_type", "type": "VARCHAR2(40 CHAR)", "description": "Multiple award type configuration" },
+    { "name": "sweeps_primary_basis_type", "type": "VARCHAR2(40 CHAR)", "description": "Primary basis type for sweepstakes" },
+    { "name": "sweeps_primary_winners", "type": "NUMBER(18)", "description": "Number of primary sweepstakes winners" },
+    { "name": "sweeps_primary_award_amount", "type": "NUMBER(14,2)", "description": "Award amount for primary winners" },
+    { "name": "sweeps_primary_award_level", "type": "NUMBER(18)", "description": "Award level for primary winners" },
+    { "name": "sweeps_secondary_basis_type", "type": "VARCHAR2(40 CHAR)", "description": "Secondary basis type for sweepstakes" },
+    { "name": "sweeps_secondary_winners", "type": "NUMBER(18)", "description": "Number of secondary winners" },
+    { "name": "sweeps_secondary_award_amount", "type": "NUMBER(14,2)", "description": "Award for secondary winners" },
+    { "name": "sweeps_secondary_award_level", "type": "NUMBER(18)", "description": "Award level for secondary winners" },
+    { "name": "score_by", "type": "VARCHAR2(100 CHAR)", "description": "Scoring criteria" },
+    { "name": "calculator_id", "type": "NUMBER(18)", "description": "Calculator reference for award calculations" },
+    { "name": "allow_self_enroll", "type": "NUMBER(1)", "isNullable": false, "description": "Whether self-enrollment is allowed" },
+    { "name": "enroll_program_code", "type": "VARCHAR2(10 CHAR)", "description": "Enrollment program code" },
+    { "name": "created_by", "type": "NUMBER(18)", "isNullable": false, "description": "Created by user" },
+    { "name": "date_created", "type": "DATE", "isNullable": false, "description": "Creation timestamp" },
+    { "name": "modified_by", "type": "NUMBER(18)", "description": "Last modified by user" },
+    { "name": "date_modified", "type": "DATE", "description": "Last modification timestamp" },
+    { "name": "version", "type": "NUMBER(18)", "isNullable": false, "description": "Row version for concurrency" },
+    { "name": "purpose", "type": "VARCHAR2(2000 CHAR)", "description": "Purpose of the promotion" },
+    { "name": "bills_active", "type": "NUMBER(1)", "isNullable": false, "description": "Bill functionality active" },
+    { "name": "swp_bills_active", "type": "NUMBER(1)", "isNullable": false, "description": "Sweepstakes bills active" },
+    { "name": "tile_display_start_date", "type": "DATE", "description": "Tile display start date" },
+    { "name": "tile_display_end_date", "type": "DATE", "description": "Tile display end date" },
+    { "name": "overview", "type": "VARCHAR2(100 CHAR)", "description": "Short overview of the promotion" }
+  ],
+  "sampleData": [],
+  "totalRecords": 0,
+  "retentionPolicy": ""
+},
+{
+  "tableName": "claim",
+  "description": "Stores information about claims submitted under promotions.",
+  "businessDomain": "Rewards",
+  "dataCategory": "Transactional",
+  "primaryKey": ["claim_id"],
+  "columns": [
+    {
+      "name": "claim_id",
+      "type": "NUMBER(12)",
+      "description": "Unique identifier for the claim",
+      "isPrimaryKey": true,
+      "isForeignKey": false,
+      "isNullable": false
+    },
+    {
+      "name": "submitter_id",
+      "type": "NUMBER(18)",
+      "description": "User who submitted the claim",
+      "isNullable": true
+    },
+    {
+      "name": "promotion_id",
+      "type": "NUMBER(18)",
+      "description": "Promotion under which the claim was submitted",
+      "isNullable": false,
+      "isForeignKey": true,
+      "referencedTable": "promotion",
+      "referencedColumn": "promotion_id"
+    },
+    {
+      "name": "node_id",
+      "type": "NUMBER(18)",
+      "description": "Node associated with the claim",
+      "isNullable": true
+    },
+    {
+      "name": "proxy_user_id",
+      "type": "NUMBER(18)",
+      "description": "Proxy user who submitted on behalf",
+      "isNullable": true
+    },
+    {
+      "name": "claim_group_id",
+      "type": "NUMBER(18)",
+      "description": "Grouped claim reference",
+      "isNullable": true
+    },
+    {
+      "name": "is_open",
+      "type": "NUMBER(1)",
+      "description": "Flag indicating if the claim is open",
+      "isNullable": true
+    },
+    {
+      "name": "approval_round",
+      "type": "NUMBER(10)",
+      "description": "Current approval round",
+      "isNullable": true
+    },
+    {
+      "name": "last_approval_node_id",
+      "type": "NUMBER(18)",
+      "description": "Last node that approved the claim",
+      "isNullable": true
+    },
+    {
+      "name": "claim_number",
+      "type": "VARCHAR2(30 CHAR)",
+      "description": "Human-readable claim number",
+      "isNullable": false,
+      "isIndexed": true,
+      "isSearchable": true
+    },
+    {
+      "name": "approver_comments",
+      "type": "VARCHAR2(4000 CHAR)",
+      "description": "Comments added by approver",
+      "isNullable": true
+    },
+    {
+      "name": "admin_comments",
+      "type": "VARCHAR2(4000 CHAR)",
+      "description": "Comments added by admin",
+      "isNullable": true
+    },
+    {
+      "name": "submission_date",
+      "type": "DATE",
+      "description": "Date claim was submitted",
+      "isNullable": false,
+      "sampleValues": ["2024-01-10", "2024-05-22"]
+    },
+    {
+      "name": "is_add_points_claim",
+      "type": "NUMBER(1)",
+      "description": "Flag indicating claim is for additional points",
+      "isNullable": false
+    },
+    {
+      "name": "created_by",
+      "type": "NUMBER(18)",
+      "description": "User who created the record",
+      "isNullable": false
+    },
+    {
+      "name": "date_created",
+      "type": "DATE",
+      "description": "Record creation timestamp",
+      "isNullable": false
+    },
+    {
+      "name": "modified_by",
+      "type": "NUMBER(18)",
+      "description": "User who last modified",
+      "isNullable": true
+    },
+    {
+      "name": "date_modified",
+      "type": "DATE",
+      "description": "Record last modified timestamp",
+      "isNullable": true
+    },
+    {
+      "name": "version",
+      "type": "NUMBER(18)",
+      "description": "Record version number",
+      "isNullable": false
+    }
+  ]
+},
+{
+  "tableName": "recognition_claim",
+  "description": "Stores recognition-specific details linked to a claim.",
+  "businessDomain": "HR",
+  "dataCategory": "Transactional",
+  "primaryKey": ["claim_id"],
+  "columns": [
+    {
+      "name": "claim_id",
+      "type": "NUMBER(12)",
+      "description": "Unique claim identifier (also links to base claim table)",
+      "businessMeaning": "Primary identifier of the recognition claim",
+      "isPrimaryKey": true,
+      "isForeignKey": true,
+      "referencedTable": "claim",
+      "referencedColumn": "claim_id",
+      "isNullable": false,
+      "isIndexed": true,
+      "isSearchable": true,
+      "sampleValues": [101, 204, 350]
+    },
+    {
+      "name": "source",
+      "type": "VARCHAR2(200 CHAR)",
+      "description": "Source through which the recognition was submitted",
+      "businessMeaning": "Indicates the channel used for recognition",
+      "isNullable": false,
+      "sampleValues": ["web", "mobile", "api"]
+    },
+    {
+      "name": "card_id",
+      "type": "NUMBER(12)",
+      "description": "ID of the recognition card",
+      "businessMeaning": "Used to fetch associated card metadata"
+    },
+    {
+      "name": "certificate_id",
+      "type": "NUMBER(12)",
+      "description": "Associated certificate ID for recognition",
+      "businessMeaning": "Links to the certificate issued"
+    },
+    {
+      "name": "copy_manager",
+      "type": "NUMBER(1)",
+      "description": "Indicates if manager gets a copy",
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "copy_sender",
+      "type": "NUMBER(1)",
+      "description": "Indicates if sender gets a copy of recognition",
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "behavior",
+      "type": "VARCHAR2(40 CHAR)",
+      "description": "Behavior recognized",
+      "sampleValues": ["teamwork", "leadership", "innovation"]
+    },
+    {
+      "name": "submitter_comments",
+      "type": "VARCHAR2(4000 CHAR)",
+      "description": "Comments from the submitter of the recognition"
+    },
+    {
+      "name": "submitter_comments_lang_id",
+      "type": "VARCHAR2(10 CHAR)",
+      "description": "Language code of the submitter comments",
+      "sampleValues": ["en", "es", "fr"]
+    },
+    {
+      "name": "is_reverse",
+      "type": "NUMBER",
+      "description": "Marks if the recognition is reverse (e.g., subordinate recognizing manager)",
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "own_card_name",
+      "type": "VARCHAR2(200 CHAR)",
+      "description": "Custom card name provided by recipient or submitter"
+    },
+    {
+      "name": "hide_public_recognition",
+      "type": "NUMBER(1)",
+      "description": "Marks if recognition should be hidden publicly",
+      "isNullable": false,
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "team_id",
+      "type": "NUMBER(12)",
+      "description": "Team associated with the recognition"
+    },
+    {
+      "name": "copy_others",
+      "type": "VARCHAR2(4000 CHAR)",
+      "description": "List of additional recipients to copy"
+    },
+    {
+      "name": "skip_standard_recog_email",
+      "type": "NUMBER(1)",
+      "description": "Skip sending standard recognition email",
+      "isNullable": false,
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "anniversary_num_days",
+      "type": "NUMBER(5)",
+      "description": "Anniversary count in days (if applicable)"
+    },
+    {
+      "name": "anniversary_num_years",
+      "type": "NUMBER(5)",
+      "description": "Anniversary count in years (if applicable)"
+    },
+    {
+      "name": "celebration_manager_message_id",
+      "type": "NUMBER(12)",
+      "description": "Message ID for celebration manager"
+    },
+    {
+      "name": "card_video_url",
+      "type": "VARCHAR2(400 CHAR)",
+      "description": "Video URL attached to the recognition card"
+    },
+    {
+      "name": "card_video_image_url",
+      "type": "VARCHAR2(400 CHAR)",
+      "description": "Thumbnail image URL for the recognition video"
+    }
+  ],
+  "sampleData": [
+    {
+      "claim_id": 101,
+      "source": "web",
+      "behavior": "teamwork",
+      "hide_public_recognition": 0,
+      "skip_standard_recog_email": 0
+    }
+  ],
+  "totalRecords": 120000,
+  "retentionPolicy": "7 years"
+},
+{
+  "tableName": "claim_item",
+  "description": "Stores individual items associated with a claim.",
+  "businessDomain": "HR",
+  "dataCategory": "Transactional",
+  "primaryKey": ["claim_item_id"],
+  "columns": [
+    {
+      "name": "claim_item_id",
+      "type": "NUMBER(18)",
+      "description": "Primary key for claim item",
+      "isPrimaryKey": true,
+      "isForeignKey": false,
+      "isNullable": false
+    },
+    {
+      "name": "claim_id",
+      "type": "NUMBER(18)",
+      "description": "Reference to claim table",
+      "isPrimaryKey": false,
+      "isForeignKey": true,
+      "referencedTable": "claim",
+      "referencedColumn": "claim_id",
+      "isNullable": false
+    },
+    {
+      "name": "serial_id",
+      "type": "VARCHAR2(100 CHAR)",
+      "description": "Serial number of the claim item",
+      "isNullable": false
+    },
+    {
+      "name": "approval_status_type",
+      "type": "VARCHAR2(18 CHAR)",
+      "description": "Type of approval status for the item",
+      "isNullable": true
+    },
+    {
+      "name": "approval_option_reason_type",
+      "type": "VARCHAR2(18 CHAR)",
+      "description": "Reason for approval choice",
+      "isNullable": true
+    },
+    {
+      "name": "approver_user_id",
+      "type": "NUMBER(18)",
+      "description": "User ID of approver",
+      "isNullable": true
+    },
+    {
+      "name": "date_approved",
+      "type": "DATE",
+      "description": "Date the item was approved",
+      "isNullable": true
+    },
+    {
+      "name": "date_created",
+      "type": "DATE",
+      "description": "Record creation date",
+      "isNullable": false
+    },
+    {
+      "name": "created_by",
+      "type": "NUMBER(18)",
+      "description": "User who created the record",
+      "isNullable": false
+    },
+    {
+      "name": "date_modified",
+      "type": "DATE",
+      "description": "Record modification date",
+      "isNullable": true
+    },
+    {
+      "name": "modified_by",
+      "type": "NUMBER(18)",
+      "description": "User who modified the record",
+      "isNullable": true
+    },
+    {
+      "name": "version",
+      "type": "NUMBER(18)",
+      "description": "Record version number",
+      "isNullable": false
+    }
+  ],
+  "sampleData": [
+    {
+      "claim_item_id": 101,
+      "claim_id": 10,
+      "serial_id": "SER-001",
+      "approval_status_type": "APPROVED"
+    }
+  ],
+  "totalRecords": 150000,
+  "retentionPolicy": "7 years"
+},
+{
+  "tableName": "claim_recipient",
+  "description": "Stores recipient details for each claim item including award quantities and notification status.",
+  "businessDomain": "HR",
+  "dataCategory": "Transactional",
+  "primaryKey": ["claim_item_id"],
+  "columns": [
+    {
+      "name": "claim_item_id",
+      "type": "NUMBER(18)",
+      "description": "Identifier of the claim item",
+      "businessMeaning": "Links recipient to the main claim item",
+      "isPrimaryKey": true,
+      "isForeignKey": true,
+      "referencedTable": "claim_item",
+      "referencedColumn": "claim_item_id",
+      "isNullable": false
+    },
+    {
+      "name": "participant_id",
+      "type": "NUMBER(18)",
+      "description": "Participant receiving the award",
+      "businessMeaning": "User who is the recipient of the award",
+      "isNullable": true
+    },
+    {
+      "name": "node_id",
+      "type": "NUMBER(18)",
+      "description": "Node associated with the recipient",
+      "businessMeaning": "Org hierarchy node for the participant",
+      "isNullable": true
+    },
+    {
+      "name": "award_qty",
+      "type": "NUMBER(18,4)",
+      "description": "Award quantity received",
+      "businessMeaning": "Points or units awarded",
+      "sampleValues": [10.0, 25.5]
+    },
+    {
+      "name": "cash_award_qty",
+      "type": "NUMBER(32,16)",
+      "description": "Cash award quantity",
+      "businessMeaning": "Monetary component of the award",
+      "sampleValues": [100.00, 250.50]
+    },
+    {
+      "name": "promo_merch_country_id",
+      "type": "NUMBER(18)",
+      "description": "Country for merchandise program",
+      "businessMeaning": "Specifies region-specific merchandise rules"
+    },
+    {
+      "name": "promo_merch_program_level_id",
+      "type": "NUMBER(18)",
+      "description": "Merchandise program level id",
+      "businessMeaning": "Tier of merchandise program"
+    },
+    {
+      "name": "product_id",
+      "type": "VARCHAR2(40 CHAR)",
+      "description": "Product associated with the award",
+      "businessMeaning": "SKU or product reference",
+      "sampleValues": ["PRD1001", "PRD2022"]
+    },
+    {
+      "name": "calculator_score",
+      "type": "NUMBER(10)",
+      "description": "Score calculated for winner",
+      "businessMeaning": "Derived score or metrics used for award decision"
+    },
+    {
+      "name": "notification_date",
+      "type": "DATE",
+      "description": "Date when participant was notified",
+      "businessMeaning": "Timestamp of award notification"
+    },
+    {
+      "name": "winner_modal_viewed",
+      "type": "NUMBER(1)",
+      "description": "Indicates if winner modal was viewed",
+      "businessMeaning": "Tracks whether the participant viewed the winner popup",
+      "sampleValues": [0, 1]
+    },
+    {
+      "name": "recognition_alert_viewed",
+      "type": "NUMBER(1)",
+      "description": "Indicates if recognition alert was viewed",
+      "businessMeaning": "Tracks acknowledgment of recognition alert",
+      "sampleValues": [0, 1]
+    }
+  ]
+}
+  ],
+  "relationships": [
+    {
+      "relationshipId": "user_to_address",
+      "description": "Each user may have multiple addresses.",
+      "masterTable": "application_user",
+      "masterColumn": "user_id",
+      "childTable": "user_address",
+      "childColumn": "user_id",
+      "relationshipType": "ONE_TO_MANY",
+      "cascadeDelete": true,
+      "cascadeUpdate": false,
+      "isMandatory": true
+    }
+  ]
+}

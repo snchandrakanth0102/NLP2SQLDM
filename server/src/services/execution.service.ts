@@ -12,7 +12,7 @@ export const formatSqlCasing = (sql: string): string => {
         'ON', 'AND', 'OR', 'NOT', 'IN', 'LIKE', 'BETWEEN', 'IS', 'NULL',
         'GROUP BY', 'ORDER BY', 'HAVING', 'DISTINCT', 'AS', 'CASE', 'WHEN', 'THEN',
         'ELSE', 'END', 'UNION', 'ALL', 'LIMIT', 'OFFSET', 'FETCH', 'FIRST', 'NEXT',
-        'ROWS', 'ONLY', 'WITH', 'OVER', 'PARTITION BY'
+        'ROWS', 'ONLY', 'WITH', 'OVER', 'PARTITION'
     ];
 
     let formattedSql = sql;
@@ -72,7 +72,7 @@ export const executeSql = async (sql: string): Promise<any> => {
         console.log('Executing SQL query...');
     }
 
-    const externalUrl = process.env.EXTERNAL_DB_URL || 'http://localhost:8080';
+    const externalUrl = process.env.EXTERNAL_DB_URL; //|| 'http://localhost:8080';
     console.log(`[DEBUG] Executing SQL against: ${externalUrl}`);
 
 
@@ -85,9 +85,12 @@ export const executeSql = async (sql: string): Promise<any> => {
                     tab: sql  // SQL query passed as query parameter
                 },
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    // 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
                 },
-                timeout: 30000  // 30 second timeout
+                timeout: 30000, // 30 second timeout
+                // Ignore self-signed certs (often needed for internal corporate tools)
+                // httpsAgent: new (require('https').Agent)({ rejectUnauthorized: false })
             }
         );
 
@@ -157,24 +160,57 @@ export const executeSql = async (sql: string): Promise<any> => {
             columnOrder = response.data.length > 0 ? Object.keys(response.data[0]) : [];
         }
 
+        // Normalize column names to lowercase for consistent frontend handling
+        const normalizedData = response.data.map(row => {
+            const normalizedRow: any = {};
+            Object.keys(row).forEach(key => {
+                normalizedRow[key.toLowerCase()] = row[key];
+            });
+            return normalizedRow;
+        });
+
+        // Also normalize columnOrder to lowercase
+        const normalizedColumnOrder = columnOrder.map(col => col.toLowerCase());
+
         // Transform response for frontend
         return {
             type: 'table',
-            data: response.data,
-            visualizationType: determineVisualizationType(response.data),
-            columnOrder: columnOrder
+            data: normalizedData,
+            visualizationType: determineVisualizationType(normalizedData),
+            columnOrder: normalizedColumnOrder
         };
 
     } catch (error: any) {
-        console.error('External API error:', error);
+        console.error('❌ External API error:', error.message);
+        console.error('Error details:', {
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data,
+            url: error.config?.url,
+            params: error.config?.params
+        });
 
         // Provide detailed error message
         if (error.response) {
-            throw new Error(
-                error.response.data?.message ||
-                error.response.data?.error ||
-                `External API error: ${error.response.status}`
-            );
+            const status = error.response.status;
+            let message = `External API error: ${status}`;
+
+            // Try to extract message if JSON
+            if (typeof error.response.data === 'object' && error.response.data) {
+                message = error.response.data.message || error.response.data.error || message;
+            } else if (typeof error.response.data === 'string') {
+                message = error.response.data;
+            } else {
+                // If HTML or text, handle specific common codes
+                if (status === 403) message += ' (Access Forbidden - Check EXTERNAL_DB_URL and authentication)';
+                if (status === 404) message += ' (Not Found - Check EXTERNAL_DB_URL)';
+                if (status === 500) message += ' (Internal Server Error - Check SQL syntax)';
+            }
+
+            const err: any = new Error(message);
+            err.statusCode = status; // Pass original status code if possible 
+            // Note: Express error middleware might use this if typed correctly, usually it expects 'statusCode' property
+            throw err;
         } else if (error.request) {
             throw new Error('No response from external API. Check if the service is running.');
         } else {
